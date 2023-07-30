@@ -1,5 +1,6 @@
 using System;
 
+namespace ModeloEstoqueProduto{
 class EstoqueProduto{
     private int id;
     private int idMaquina;
@@ -50,7 +51,7 @@ class EstoqueProduto{
         get {return this.idMaquina;}
     }
 
-    public int idProduto{
+    public int IdProduto{
         set {if (value > 0) this.idProduto = value;}
         get {return this.idProduto;}
     }
@@ -60,7 +61,7 @@ class EstoqueProduto{
         get {return this.quantidadeEstoque;}
     }
 
-    public int EstoqueProduto{
+    public int Estoque{
         set {if (value > 0) this.estoqueMaximo = value;}
         get {return this.estoqueMaximo;}
     }
@@ -68,4 +69,5 @@ class EstoqueProduto{
     public override string ToString(){
         return $"{id} - {idMaquina} - {idProduto} - {quantidadeEstoque} - {estoqueMaximo}";
     }
+}
 }
