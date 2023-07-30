@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 class NMaquina{
     private static List<Maquina> maquinas = new List<Maquina>();
+    private static int proximoId = 1;
     
     public static List<Maquina> Listar() {
         return maquinas;
     }
 
     public static Maquina Listar(int id) {
-        foreach(Maquina obj in maquina)
+        foreach(Maquina obj in maquinas)
             if (obj.Id == id) return obj;
         return null;
     }

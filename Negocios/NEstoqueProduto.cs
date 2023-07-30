@@ -34,4 +34,15 @@ class NEstoqueProduto{
         EstoqueProduto obj = Listar(e.Id);
         if (obj != null) estoqueProdutos.Remove(obj);
     }
+
+    // public static List<EstoqueProduto> ListarPorMaquina(int idMaquina){
+    //     List<EstoqueProduto> estoqueDaMaquina = new List<EstoqueProduto>();
+
+    //     foreach (var estoqueProduto in estoqueProdutos){
+    //         if (estoqueProduto.IdMaquina == idMaquina){
+    //             estoqueDaMaquina.Add(estoqueProduto);
+    //         }
+    //     }
+    //     return estoqueDaMaquina;
+    // }
 }
