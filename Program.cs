@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 
@@ -411,7 +412,7 @@ namespace VendMon
                             100
                         );
                         NEstoqueProduto.Inserir(estoqueProdutoMaquina);
-                        Console.WriteLine("Entrou no if 1");
+                        
 
                         EstoqueProduto estoqueGeral2 = NEstoqueProduto.ListarPorMaquinaEProduto(
                             idMaquina,
@@ -424,7 +425,7 @@ namespace VendMon
                             estoqueGeral2 = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
                             NEstoqueProduto.Inserir(estoqueGeral2);
 
-                            Console.WriteLine("Entrou no if 3");
+                           
                         }
                         else
                         {
@@ -432,7 +433,7 @@ namespace VendMon
                             estoqueGeral2.QuantidadeEstoque += quantidadeAbastecimento;
                             NEstoqueProduto.Atualizar(estoqueGeral2);
 
-                            Console.WriteLine("Entrou no if 4");
+                            
                         }
                     }
                     else
@@ -441,7 +442,7 @@ namespace VendMon
                         estoqueProdutoMaquina.QuantidadeEstoque += quantidadeAbastecimento;
                         NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
 
-                        Console.WriteLine("Entrou no if 2");
+                        
                     }
 
                     // Atualiza o estoque do produto geral
@@ -453,7 +454,7 @@ namespace VendMon
                         estoqueGeral = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
                         NEstoqueProduto.Inserir(estoqueGeral);
 
-                        Console.WriteLine("Entrou no if 3");
+                        
                     }
 
                     produto.Quantidade -= quantidadeAbastecimento;
@@ -640,5 +641,6 @@ namespace VendMon
             Console.WriteLine("Saindo do sistema...");
             Environment.Exit(0);
         }
+    
     }
 }
