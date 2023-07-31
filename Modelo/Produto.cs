@@ -2,7 +2,7 @@ using System;
 
 namespace ModeloProduto
 {
-    class Produto
+    public class Produto
     {
         private string nome;
         private double valor;
@@ -11,44 +11,15 @@ namespace ModeloProduto
         private int quantidade;
         private TipoProduto tipoDoProduto;
 
+        public Produto() { }
+
         public Produto(string nome, double valor, TipoProduto tipoDoProduto, int id, int quantidade)
         { //TipoProduto enumeration
-            if (!string.IsNullOrEmpty(nome))
-            {
-                this.nome = nome;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (valor > 0)
-            {
-                this.valor = valor;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            if (id >= 0)
-            {
-                this.id = id;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            if (quantidade > 0)
-            {
-                this.quantidade = quantidade;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            this.tipoDoProduto = tipoDoProduto;
+            Nome = nome;
+            Valor = valor;
+            TipoDoProduto = tipoDoProduto;
+            Id = id;
+            Quantidade = quantidade;
         }
 
         public string Nome
@@ -105,7 +76,7 @@ namespace ModeloProduto
         }
     }
 
-    enum TipoProduto
+    public enum TipoProduto
     {
         Refrigerante,
         Chocolate,

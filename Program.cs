@@ -1,4 +1,7 @@
 using System;
+using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 
 using ModeloMaquina;
@@ -20,6 +23,11 @@ namespace VendMon
             Program program = new Program();
 
             Console.WriteLine("Bem-vindo ao sistema Vendmon!");
+
+            //Abrindo
+            NProduto.Abrir();
+            NMaquina.Abrir();
+            NEstoqueProduto.Abrir();
 
             bool continuar = true;
             while (continuar)
@@ -208,6 +216,7 @@ namespace VendMon
                 Produto p = new Produto(n, v, t, novoId, q);
                 NProduto.Inserir(p);
                 Console.WriteLine("Produto inserido com sucesso!");
+                NProduto.Salvar();
             }
             else
             {
@@ -246,6 +255,7 @@ namespace VendMon
 
                     NProduto.Atualizar(p);
                     Console.WriteLine("Produto atualizado com sucesso!");
+                    NProduto.Salvar();
                 }
                 else
                 {
@@ -268,12 +278,13 @@ namespace VendMon
 
             int id = int.Parse(Console.ReadLine());
 
-            Produto p = NProduto.Listar(id); // Retrieve the product with the specified ID
+            Produto p = NProduto.Listar(id);
 
             if (p != null)
             {
-                NProduto.Excluir(p); // Call the method to delete the product
+                NProduto.Excluir(p);
                 Console.WriteLine("Produto excluído com sucesso!");
+                NProduto.Salvar();
             }
             else
             {
@@ -317,6 +328,7 @@ namespace VendMon
             Maquina m = new Maquina(local, novoId); //?
             NMaquina.Inserir(m);
             Console.WriteLine("Máquina inserida com sucesso!");
+            NMaquina.Salvar();
         }
 
         public void AtualizarMaquina()
@@ -338,6 +350,7 @@ namespace VendMon
 
                 NMaquina.Atualizar(m);
                 Console.WriteLine("Maquina atualizado com sucesso!");
+                NMaquina.Salvar();
             }
             else
             {
@@ -359,6 +372,7 @@ namespace VendMon
             {
                 NMaquina.Excluir(m);
                 Console.WriteLine("Máquina excluída com sucesso!");
+                NMaquina.Salvar();
             }
             else
             {
@@ -411,7 +425,6 @@ namespace VendMon
                             100
                         );
                         NEstoqueProduto.Inserir(estoqueProdutoMaquina);
-                        Console.WriteLine("Entrou no if 1");
 
                         EstoqueProduto estoqueGeral2 = NEstoqueProduto.ListarPorMaquinaEProduto(
                             idMaquina,
@@ -423,16 +436,12 @@ namespace VendMon
                             // Se não encontrou, cria uma nova entrada no estoque geral
                             estoqueGeral2 = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
                             NEstoqueProduto.Inserir(estoqueGeral2);
-
-                            Console.WriteLine("Entrou no if 3");
                         }
                         else
                         {
                             // Se encontrou, atualiza a quantidade do produto no estoque geral
                             estoqueGeral2.QuantidadeEstoque += quantidadeAbastecimento;
                             NEstoqueProduto.Atualizar(estoqueGeral2);
-
-                            Console.WriteLine("Entrou no if 4");
                         }
                     }
                     else
@@ -440,8 +449,6 @@ namespace VendMon
                         // Se encontrou, atualiza a quantidade do produto no estoque da máquina
                         estoqueProdutoMaquina.QuantidadeEstoque += quantidadeAbastecimento;
                         NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
-
-                        Console.WriteLine("Entrou no if 2");
                     }
 
                     // Atualiza o estoque do produto geral
@@ -452,14 +459,14 @@ namespace VendMon
                         // Se não encontrou, cria uma nova entrada no estoque geral
                         estoqueGeral = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
                         NEstoqueProduto.Inserir(estoqueGeral);
-
-                        Console.WriteLine("Entrou no if 3");
                     }
 
                     produto.Quantidade -= quantidadeAbastecimento;
                     NProduto.Atualizar(produto);
 
                     Console.WriteLine("Abastecimento realizado com sucesso!");
+                    NProduto.Salvar();
+                    NEstoqueProduto.Salvar();
                 }
                 else
                 {
@@ -607,6 +614,7 @@ namespace VendMon
                 {
                     estoqueProdutoMaquina.QuantidadeEstoque -= 1;
                     NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
+                    NEstoqueProduto.Salvar();
                 }
                 else
                 {
@@ -627,6 +635,7 @@ namespace VendMon
                 {
                     estoqueProdutoMaquina.QuantidadeEstoque -= 1;
                     NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
+                    NEstoqueProduto.Salvar();
                 }
                 else
                 {

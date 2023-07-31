@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Produto>
+    <Nome>Coca</Nome>
+    <Valor>4</Valor>
+    <Id>1</Id>
+    <TipoDoProduto>Refrigerante</TipoDoProduto>
+    <Quantidade>1</Quantidade>
+  </Produto>
+  <Produto>
+    <Nome>Snickers</Nome>
+    <Valor>4.5</Valor>
+    <Id>2</Id>
+    <TipoDoProduto>Chocolate</TipoDoProduto>
+    <Quantidade>1</Quantidade>
+  </Produto>
+  <Produto>
+    <Nome>Pepsi</Nome>
+    <Valor>3</Valor>
+    <Id>3</Id>
+    <TipoDoProduto>Refrigerante</TipoDoProduto>
+    <Quantidade>0</Quantidade>
+  </Produto>
+  <Produto>
+    <Nome>Doritos</Nome>
+    <Valor>12.5</Valor>
+    <Id>4</Id>
+    <TipoDoProduto>Salgados</TipoDoProduto>
+    <Quantidade>3</Quantidade>
+  </Produto>
+</ArrayOfProduto>

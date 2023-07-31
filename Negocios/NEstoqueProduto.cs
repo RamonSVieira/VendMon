@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.IO;
+
 using ModeloEstoqueProduto;
 
 namespace NegocioEstoqueProduto
@@ -73,6 +76,32 @@ namespace NegocioEstoqueProduto
                 }
             }
             return estoqueDaMaquina;
+        }
+
+        public static void Salvar()
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(List<EstoqueProduto>));
+            using (StreamWriter f = new StreamWriter("estoqueProdutos.xml"))
+            {
+                xml.Serialize(f, estoqueProdutos);
+            }
+        }
+
+        public static void Abrir()
+        {
+            string filePath = "estoqueProdutos.xml";
+            if (File.Exists(filePath))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<EstoqueProduto>));
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    estoqueProdutos = (List<EstoqueProduto>)serializer.Deserialize(fileStream);
+                }
+            }
+            else
+            {
+                estoqueProdutos = new List<EstoqueProduto>();
+            }
         }
     }
 }

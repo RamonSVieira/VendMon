@@ -2,13 +2,15 @@ using System;
 
 namespace ModeloEstoqueProduto
 {
-    class EstoqueProduto
+    public class EstoqueProduto
     {
         private int id;
         private int idMaquina;
         private int idProduto;
         private int quantidadeEstoque;
         private int estoqueMaximo;
+
+        public EstoqueProduto() { }
 
         public EstoqueProduto(
             int id,
