@@ -7,9 +7,11 @@ namespace ModeloProduto
         private string nome;
         private double valor;
         private int id;
+
+        private int quantidade;
         private TipoProduto tipoDoProduto;
 
-        public Produto(string nome, double valor, TipoProduto tipoDoProduto, int id)
+        public Produto(string nome, double valor, TipoProduto tipoDoProduto, int id, int quantidade)
         { //TipoProduto enumeration
             if (!string.IsNullOrEmpty(nome))
             {
@@ -32,6 +34,14 @@ namespace ModeloProduto
             if (id >= 0)
             {
                 this.id = id;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            if (quantidade > 0)
+            {
+                this.quantidade = quantidade;
             }
             else
             {
@@ -75,6 +85,18 @@ namespace ModeloProduto
         {
             set { this.tipoDoProduto = value; }
             get { return tipoDoProduto; }
+        }
+
+        public int Quantidade
+        {
+            set
+            {
+                if (value >= 0)
+                    quantidade = value;
+                else
+                    throw new ArgumentOutOfRangeException();
+            }
+            get { return quantidade; }
         }
 
         public override string ToString()

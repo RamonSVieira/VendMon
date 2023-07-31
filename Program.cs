@@ -72,12 +72,20 @@ namespace VendMon
                                 case 9:
                                     program.AbastecerMaquina();
                                     break;
-
-                                case 00:
+                                case 10:
                                     opcaoAdm = -1;
                                     break;
+                                case 0:
+                                    program.SairSistema();
+                                    break;
+                            }
+
+                            if (opcaoAdm == -1)
+                            {
+                                break;
                             }
                             program.MenuAdmin();
+
                             opcaoAdm = int.Parse(Console.ReadLine());
                         }
                         break;
@@ -85,6 +93,22 @@ namespace VendMon
                     else if (opcao == 2)
                     {
                         program.MenuVisitante();
+                        int opcaoVisi = int.Parse(Console.ReadLine());
+                        while (opcaoVisi != -1)
+                        {
+                            switch (opcaoVisi)
+                            {
+                                case 1:
+                                    program.EscolherMaquina();
+                                    break;
+                                case 0:
+                                    program.SairSistema();
+                                    break;
+                            }
+                            program.MenuVisitante();
+
+                            opcaoVisi = int.Parse(Console.ReadLine());
+                        }
                         break;
                     }
                     else if (opcao == 0)
@@ -118,6 +142,7 @@ namespace VendMon
             Console.WriteLine("----- Abastecer ------");
             Console.WriteLine("| 09 - Abastecer     |");
             Console.WriteLine("----------------------");
+            Console.WriteLine("| 10 - Menu Principal|");
             Console.WriteLine("| 00 - Fim           |");
             Console.WriteLine("----------------------");
             Console.Write("\nOpção: ");
@@ -126,13 +151,11 @@ namespace VendMon
         public void MenuVisitante()
         {
             Console.WriteLine("--------- Opções --------");
-            Console.WriteLine("| 01 - Escolher Produto |");
-            Console.WriteLine("| 02 - Pagar Produto    |");
+            Console.WriteLine("| 01 - Comprar Produto  |");
             Console.WriteLine("--------------------------");
-            Console.WriteLine("| 00 - Fim            |");
+            Console.WriteLine("| 00 - Fim              |");
             Console.WriteLine("--------------------------");
             Console.Write("\nOpção: ");
-            int.Parse(Console.ReadLine());
         }
 
         //==========================PRODUTO ==========================
@@ -145,7 +168,7 @@ namespace VendMon
             foreach (var produto in produtos)
             {
                 Console.WriteLine(
-                    $"{produto.Id} - {produto.Nome} - {produto.Valor:F2} - {produto.TipoDoProduto}"
+                    $"{produto.Id} - {produto.Nome} - {produto.Valor:F2} - {produto.TipoDoProduto} - {produto.Quantidade}"
                 );
             }
             Console.WriteLine($"\n");
@@ -161,6 +184,9 @@ namespace VendMon
 
             Console.Write("Informe o valor do produto: ");
             double v = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a quantidade do produto: ");
+            int q = int.Parse(Console.ReadLine());
 
             Console.Write("Informe o tipo do produto (Refrigerante, Chocolate, Salgados): ");
             string tipoProdutoInput = Console.ReadLine();
@@ -179,7 +205,7 @@ namespace VendMon
                 // Incrementando o ID para criar o novo ID do produto
                 int novoId = ultimoId + 1;
 
-                Produto p = new Produto(n, v, t, novoId);
+                Produto p = new Produto(n, v, t, novoId, q);
                 NProduto.Inserir(p);
                 Console.WriteLine("Produto inserido com sucesso!");
             }
@@ -356,42 +382,82 @@ namespace VendMon
                 ListarProduto();
 
                 Console.WriteLine("Digite o id do produto que deseja abastecer");
-
                 int idProduto = int.Parse(Console.ReadLine());
 
-                Produto produto = NProduto.Listar(idProduto);
+                Console.WriteLine("Quantidade");
+                int quantidadeAbastecimento = int.Parse(Console.ReadLine());
 
+                Produto produto = NProduto.Listar(idProduto);
                 if (produto != null)
                 {
                     Console.WriteLine(
-                        $"Produto selecionado: ${produto.Nome} - ${produto.Valor:F2}"
+                        $"Produto selecionado: {produto.Nome} - R${produto.Valor:F2}"
                     );
 
-                    Console.WriteLine("Digite a quantidade");
-                    int quantidadeAbastecimento = int.Parse(Console.ReadLine());
+                    // Encontra o estoque do produto na máquina (se existir)
+                    EstoqueProduto estoqueProdutoMaquina = NEstoqueProduto.ListarPorMaquinaEProduto(
+                        maquina.Id,
+                        idProduto
+                    );
 
-                    EstoqueProduto estoqueMaquina = NEstoqueProduto
-                        .Listar()
-                        .Find(e => e.IdMaquina == idMaquina);
-
-                    // Verificando se o estoque da máquina já foi criado
-                    if (estoqueMaquina == null)
+                    if (estoqueProdutoMaquina == null)
                     {
-                        // Se não foi criado, crie uma nova instância
-                        estoqueMaquina = new EstoqueProduto(0, idMaquina, idProduto, 0, 0);
-                        NEstoqueProduto.Inserir(estoqueMaquina);
+                        // Se não encontrou, cria uma nova entrada no estoque da máquina
+                        estoqueProdutoMaquina = new EstoqueProduto(
+                            0,
+                            maquina.Id,
+                            idProduto,
+                            0,
+                            100
+                        );
+                        NEstoqueProduto.Inserir(estoqueProdutoMaquina);
+                        Console.WriteLine("Entrou no if 1");
+
+                        EstoqueProduto estoqueGeral2 = NEstoqueProduto.ListarPorMaquinaEProduto(
+                            idMaquina,
+                            idProduto
+                        );
+
+                        if (estoqueGeral2 == null)
+                        {
+                            // Se não encontrou, cria uma nova entrada no estoque geral
+                            estoqueGeral2 = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
+                            NEstoqueProduto.Inserir(estoqueGeral2);
+
+                            Console.WriteLine("Entrou no if 3");
+                        }
+                        else
+                        {
+                            // Se encontrou, atualiza a quantidade do produto no estoque geral
+                            estoqueGeral2.QuantidadeEstoque += quantidadeAbastecimento;
+                            NEstoqueProduto.Atualizar(estoqueGeral2);
+
+                            Console.WriteLine("Entrou no if 4");
+                        }
+                    }
+                    else
+                    {
+                        // Se encontrou, atualiza a quantidade do produto no estoque da máquina
+                        estoqueProdutoMaquina.QuantidadeEstoque += quantidadeAbastecimento;
+                        NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
+
+                        Console.WriteLine("Entrou no if 2");
                     }
 
-                    AbastecimentoDoSistema abastecimento = new AbastecimentoDoSistema();
-                    abastecimento.IdMaquina = idMaquina;
-                    abastecimento.IdProduto = idProduto;
-                    abastecimento.QuantidadeDoAbastecimento = quantidadeAbastecimento;
+                    // Atualiza o estoque do produto geral
+                    EstoqueProduto estoqueGeral = NEstoqueProduto.Listar(idProduto);
 
-                    NAbastecimento.Inserir(abastecimento);
+                    if (estoqueGeral == null)
+                    {
+                        // Se não encontrou, cria uma nova entrada no estoque geral
+                        estoqueGeral = new EstoqueProduto(0, idMaquina, idProduto, 0, 100);
+                        NEstoqueProduto.Inserir(estoqueGeral);
 
-                    // Atualizar a quantidade do produto no estoque da máquina
-                    estoqueMaquina.QuantidadeEstoque += quantidadeAbastecimento;
-                    NEstoqueProduto.Atualizar(estoqueMaquina);
+                        Console.WriteLine("Entrou no if 3");
+                    }
+
+                    produto.Quantidade -= quantidadeAbastecimento;
+                    NProduto.Atualizar(produto);
 
                     Console.WriteLine("Abastecimento realizado com sucesso!");
                 }
@@ -404,6 +470,8 @@ namespace VendMon
             {
                 Console.WriteLine("Maquina não encontrada. Verifique o ID digitado.");
             }
+
+            ExibirVitrine(maquina);
         }
 
         //==========================OUTROS ==========================
@@ -412,46 +480,160 @@ namespace VendMon
         {
             // Listando as máquinas
             var maquinas = NMaquina.Listar();
+            int cont = 0;
             foreach (var m in maquinas)
             {
                 Console.WriteLine($"{m.Id} - {m.Local}");
+                cont++;
             }
             // Escolhendo a máquina pelo id
-            Console.Write("Digite o ID da máquina desejada: ");
-            int idMaquina = int.Parse(Console.ReadLine());
-
-            Maquina maquina = NMaquina.Listar(idMaquina);
-
-            if (idMaquina != null)
+            if (cont != 0)
             {
-                // ExibirVitrine(maquina);
-                Console.WriteLine("deu certo");
+                Console.Write("Digite o ID da máquina desejada: ");
+                int idMaquina = int.Parse(Console.ReadLine());
+
+                Maquina maquina = NMaquina.Listar(idMaquina);
+
+                if (idMaquina != null)
+                {
+                    ExibirVitrineVisitante(maquina);
+                }
+                else
+                {
+                    Console.WriteLine("Máquina não encontrada.");
+                }
             }
             else
             {
-                Console.WriteLine("Máquina não encontrada.");
+                Console.WriteLine("No momento, não existem máquinas cadastradas :(");
             }
+        }
+
+        public void ExibirVitrineVisitante(Maquina maquina)
+        {
+            Console.WriteLine($"Vitrine da Máquina - {maquina.Local}");
+            List<EstoqueProduto> estoqueDaMaquina = NEstoqueProduto.ListarPorMaquina(maquina.Id);
+
+            if (estoqueDaMaquina.Count == 0)
+            {
+                Console.WriteLine("Nenhum produto cadastrado nesta máquina.");
+            }
+            else
+            {
+                Console.WriteLine("Produtos disponíveis na máquina:");
+                foreach (var estoqueProduto in estoqueDaMaquina)
+                {
+                    Produto produto = NProduto.Listar(estoqueProduto.IdProduto);
+                    Console.WriteLine(
+                        $"{produto.Id} - {produto.Nome} - R${produto.Valor:F2} - Quantidade: {estoqueProduto.QuantidadeEstoque}"
+                    );
+                }
+            }
+
+            EscolherProduto(maquina);
         }
 
         public void ExibirVitrine(Maquina maquina)
         {
             Console.WriteLine($"Vitrine da Máquina - {maquina.Local}");
-            // Listando os produtos da maquina escolhida
-
             List<EstoqueProduto> estoqueDaMaquina = NEstoqueProduto.ListarPorMaquina(maquina.Id);
-            foreach (var estoqueProduto in estoqueDaMaquina)
+
+            if (estoqueDaMaquina.Count == 0)
             {
-                // Listando os produtos que estão no estoque da máquina
-                Produto produto = NProduto.Listar(estoqueProduto.IdProduto);
-                Console.WriteLine($"{produto.Id} - {produto.Nome} - R${produto.Valor}");
+                Console.WriteLine("Nenhum produto cadastrado nesta máquina.");
+            }
+            else
+            {
+                Console.WriteLine("Produtos disponíveis na máquina:");
+                foreach (var estoqueProduto in estoqueDaMaquina)
+                {
+                    Produto produto = NProduto.Listar(estoqueProduto.IdProduto);
+                    Console.WriteLine(
+                        $"{produto.Id} - {produto.Nome} - R${produto.Valor:F2} - Quantidade: {estoqueProduto.QuantidadeEstoque}"
+                    );
+                }
             }
         }
 
-        public void EscolherProduto() { }
+        public void EscolherProduto(Maquina maquina)
+        {
+            Console.WriteLine("Digite o id do produto que deseja comprar");
+            int idProduto = int.Parse(Console.ReadLine());
 
-        public void VerificarPagamento() { }
+            EstoqueProduto produto = NEstoqueProduto.ListarPorMaquinaEProduto(
+                maquina.Id,
+                idProduto
+            );
+            Produto prod = NProduto.Listar(idProduto);
+            Console.WriteLine($"{produto.QuantidadeEstoque}");
 
-        public void EntrarSistema() { }
+            if (produto != null)
+            {
+                if (produto.QuantidadeEstoque > 0)
+                {
+                    VerificarPagamento(maquina, prod);
+                }
+                else
+                {
+                    Console.WriteLine("Produto indisponível na maquina");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Produto nao encontrado, verifique se o Id está correto");
+            }
+        }
+
+        public void VerificarPagamento(Maquina maquina, Produto produto)
+        {
+            Console.WriteLine($"O valor do produto é R${produto.Valor:F2}");
+
+            Console.WriteLine($"Insira o pagamento do produto");
+            double valorP = double.Parse(Console.ReadLine());
+
+            if (valorP < produto.Valor)
+            {
+                Console.WriteLine($"O valor inserido é insuficiente para efetuação da compra. :(");
+            }
+            else if (valorP == produto.Valor)
+            {
+                Console.WriteLine($"Compra bem sucedida. Voce recebeu seu produto: {produto.Nome}");
+                // Subtrai 1 da quantidade do produto no estoque da máquina
+                EstoqueProduto estoqueProdutoMaquina = NEstoqueProduto.ListarPorMaquinaEProduto(
+                    maquina.Id,
+                    produto.Id
+                );
+                if (estoqueProdutoMaquina != null)
+                {
+                    estoqueProdutoMaquina.QuantidadeEstoque -= 1;
+                    NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
+                }
+                else
+                {
+                    Console.WriteLine("Erro ao atualizar o estoque da máquina.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Compra bem sucedida. Voce recebeu seu produto: {produto.Nome}");
+                double troco = valorP - produto.Valor;
+                Console.WriteLine($"Seu troco é de: R${troco:F2}");
+                // Subtrai 1 da quantidade do produto no estoque da máquina
+                EstoqueProduto estoqueProdutoMaquina = NEstoqueProduto.ListarPorMaquinaEProduto(
+                    maquina.Id,
+                    produto.Id
+                );
+                if (estoqueProdutoMaquina != null)
+                {
+                    estoqueProdutoMaquina.QuantidadeEstoque -= 1;
+                    NEstoqueProduto.Atualizar(estoqueProdutoMaquina);
+                }
+                else
+                {
+                    Console.WriteLine("Erro ao atualizar o estoque da máquina.");
+                }
+            }
+        }
 
         public void SairSistema()
         {

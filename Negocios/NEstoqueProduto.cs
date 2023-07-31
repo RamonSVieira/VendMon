@@ -21,6 +21,19 @@ namespace NegocioEstoqueProduto
             return null;
         }
 
+        public static EstoqueProduto ListarPorMaquinaEProduto(int idMaquina, int idProduto)
+        {
+            List<EstoqueProduto> estoqueProdutos = NEstoqueProduto.Listar();
+            foreach (EstoqueProduto estoqueProduto in estoqueProdutos)
+            {
+                if (estoqueProduto.IdMaquina == idMaquina && estoqueProduto.IdProduto == idProduto)
+                {
+                    return estoqueProduto;
+                }
+            }
+            return null; // Retorna null se não encontrar o produto na máquina
+        }
+
         public static void Inserir(EstoqueProduto e)
         {
             int id = 0;
