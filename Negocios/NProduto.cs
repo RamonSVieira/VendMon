@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.IO;
 
 using ModeloProduto;
 
@@ -49,6 +51,32 @@ namespace NegocioProduto
             Produto obj = Listar(p.Id);
             if (obj != null)
                 produtos.Remove(obj);
+        }
+
+        public static void Salvar()
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(List<Produto>));
+            using (StreamWriter f = new StreamWriter("produtos.xml"))
+            {
+                xml.Serialize(f, produtos);
+            }
+        }
+
+        public static void Abrir()
+        {
+            string filePath = "produtos.xml";
+            if (File.Exists(filePath))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Produto>));
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    produtos = (List<Produto>)serializer.Deserialize(fileStream);
+                }
+            }
+            else
+            {
+                produtos = new List<Produto>();
+            }
         }
     }
 }
