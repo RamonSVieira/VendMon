@@ -1,7 +1,6 @@
 using System;
 
 namespace ModeloMaquina{
-    
     class Maquina{
         private int id;
         private string local;
@@ -26,7 +25,7 @@ namespace ModeloMaquina{
         }
 
         public int Id{
-            set {if (value > 0) Id = value;}
+            set {if (value > 0) id= value;}
             get{ return id;}
         }
 

@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
+using ModeloMaquina;
 
+namespace NegocioMaquina{
 class NMaquina{
     private static List<Maquina> maquinas = new List<Maquina>();
     private static int proximoId = 1;
@@ -33,4 +33,5 @@ class NMaquina{
         Maquina obj = Listar(m.Id);
         if (obj != null) maquinas.Remove(obj);
     }
+}
 }

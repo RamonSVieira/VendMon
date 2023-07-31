@@ -1,0 +1,16 @@
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.AssemblyInfoInputs.cache
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.AssemblyInfo.cs
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.exe
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.deps.json
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.runtimeconfig.json
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.runtimeconfig.dev.json
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.dll
+C:\Users\Lenovo\Desktop\VendMon\bin\Debug\net5.0\VendMon.pdb
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.dll
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\refint\VendMon.dll
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.pdb
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\VendMon.genruntimeconfig.cache
+C:\Users\Lenovo\Desktop\VendMon\obj\Debug\net5.0\ref\VendMon.dll
