@@ -467,6 +467,7 @@ namespace VendMon
                     Console.WriteLine("Abastecimento realizado com sucesso!");
                     NProduto.Salvar();
                     NEstoqueProduto.Salvar();
+                    ExibirVitrine(maquina);
                 }
                 else
                 {
@@ -478,7 +479,7 @@ namespace VendMon
                 Console.WriteLine("Maquina não encontrada. Verifique o ID digitado.");
             }
 
-            ExibirVitrine(maquina);
+            
         }
 
         //==========================OUTROS ==========================
@@ -501,7 +502,7 @@ namespace VendMon
 
                 Maquina maquina = NMaquina.Listar(idMaquina);
 
-                if (idMaquina != null)
+                if (maquina != null)
                 {
                     ExibirVitrineVisitante(maquina);
                 }
@@ -572,10 +573,10 @@ namespace VendMon
                 idProduto
             );
             Produto prod = NProduto.Listar(idProduto);
-            Console.WriteLine($"{produto.QuantidadeEstoque}");
-
+            
             if (produto != null)
             {
+            Console.WriteLine($"{produto.QuantidadeEstoque}");
                 if (produto.QuantidadeEstoque > 0)
                 {
                     VerificarPagamento(maquina, prod);

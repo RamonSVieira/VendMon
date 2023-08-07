@@ -25,7 +25,7 @@
     <Id>4</Id>
     <IdMaquina>1</IdMaquina>
     <IdProduto>4</IdProduto>
-    <QuantidadeEstoque>2</QuantidadeEstoque>
+    <QuantidadeEstoque>1</QuantidadeEstoque>
     <Estoque>100</Estoque>
   </EstoqueProduto>
   <EstoqueProduto>
@@ -68,6 +68,20 @@
     <IdMaquina>3</IdMaquina>
     <IdProduto>3</IdProduto>
     <QuantidadeEstoque>3</QuantidadeEstoque>
+    <Estoque>100</Estoque>
+  </EstoqueProduto>
+  <EstoqueProduto>
+    <Id>11</Id>
+    <IdMaquina>2</IdMaquina>
+    <IdProduto>5</IdProduto>
+    <QuantidadeEstoque>15</QuantidadeEstoque>
+    <Estoque>100</Estoque>
+  </EstoqueProduto>
+  <EstoqueProduto>
+    <Id>12</Id>
+    <IdMaquina>1</IdMaquina>
+    <IdProduto>5</IdProduto>
+    <QuantidadeEstoque>0</QuantidadeEstoque>
     <Estoque>100</Estoque>
   </EstoqueProduto>
 </ArrayOfEstoqueProduto>
