@@ -28,4 +28,11 @@
     <TipoDoProduto>Salgados</TipoDoProduto>
     <Quantidade>3</Quantidade>
   </Produto>
+  <Produto>
+    <Nome>snickers</Nome>
+    <Valor>10</Valor>
+    <Id>5</Id>
+    <TipoDoProduto>Chocolate</TipoDoProduto>
+    <Quantidade>6</Quantidade>
+  </Produto>
 </ArrayOfProduto>

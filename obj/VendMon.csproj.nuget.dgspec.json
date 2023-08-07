@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\VendMon\\VendMon.csproj": {}
+    "c:\\Users\\isisa\\OneDrive\\Área de Trabalho\\VendMon\\VendMon.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\VendMon\\VendMon.csproj": {
+    "c:\\Users\\isisa\\OneDrive\\Área de Trabalho\\VendMon\\VendMon.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\VendMon\\VendMon.csproj",
+        "projectUniqueName": "c:\\Users\\isisa\\OneDrive\\Área de Trabalho\\VendMon\\VendMon.csproj",
         "projectName": "VendMon",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\VendMon\\VendMon.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\VendMon\\obj\\",
+        "projectPath": "c:\\Users\\isisa\\OneDrive\\Área de Trabalho\\VendMon\\VendMon.csproj",
+        "packagesPath": "C:\\Users\\isisa\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\isisa\\OneDrive\\Área de Trabalho\\VendMon\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\isisa\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }
